@@ -2,14 +2,11 @@ import 'package:flutter/material.dart';
 
 class CustomColors {
 
-  static const _DARK_BLUE = Color(0xff366c9c);
-  static const _MEDIUM_BLUE = Color(0xff67a2cb);
-  static const _LIGHT_BLUE = Color(0xffa6d4f2);
-  static const _BEIGE = Color(0xfff5e3d3);
-  static const _PINK = Color(0xfff5e3d3);
-
-  static const PRIMARY_COLOR = _DARK_BLUE ;
-  static const SECONDARY_COLOR = _PINK ;
-  static const BACKGROUND_COLOR = _BEIGE ;
-
+  static const NAVY_BLUE = Color(0xff0E1A4F);
+  static const DARK_BLUE = Color(0xff366c9c);
+  static const MEDIUM_BLUE = Color(0xff67a2cb);
+  static const LIGHT_BLUE = Color(0xffa6d4f2);
+  static const BEIGE = Color(0xfff5e3d3);
+  static const PINK = Color(0xfff5e3d3);
+  static const BLACK = Colors.black ;
 }

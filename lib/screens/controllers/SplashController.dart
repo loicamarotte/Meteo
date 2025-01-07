@@ -1,7 +1,10 @@
 
+import 'package:Meteo/managers/WebServiceManager.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 import '../views/SplashView.dart';
+import 'HomeController.dart';
 
 class SplashViewController extends StatefulWidget {
 
@@ -35,5 +38,13 @@ class SplashController extends State<SplashViewController> {
   }
 
   _loadData() async {
+    await WebServiceManager().getMeteoApiData();
+
+
+    _goToHome();
+  }
+
+  _goToHome() {
+    Navigator.push(context, MaterialPageRoute(builder: (context) => const HomeViewController()));
   }
 }

@@ -15,7 +15,7 @@ class SplashView extends WidgetView<SplashViewController, SplashController> {
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle.dark.copyWith(statusBarColor: Colors.white),
       child: Scaffold(
-        backgroundColor: CustomColors.BACKGROUND_COLOR,
+        //backgroundColor: CustomColors.BACKGROUND_COLOR,
         resizeToAvoidBottomInset: false,
         body: SafeArea(
           child: Center(
