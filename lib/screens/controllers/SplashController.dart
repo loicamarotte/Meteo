@@ -38,8 +38,10 @@ class SplashController extends State<SplashViewController> {
   }
 
   _loadData() async {
-    await WebServiceManager().getMeteoApiData();
+    //await WebServiceManager().getMeteoApiData();
 
+    // simule loading
+    await Future.delayed(Duration(seconds: 2));
 
     _goToHome();
   }

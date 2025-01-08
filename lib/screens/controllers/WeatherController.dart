@@ -47,7 +47,7 @@ class WeatherController extends State<WeatherViewController> {
     cityName = widget.city.frenchName ?? widget.city.name ;
     countryAndStateName = widget.city.state != null ? "${widget.city.state}, ${widget.city.country}" : widget.city.country ;
 
-    await WebServiceManager().getMeteoApiData();
+    await WebServiceManager().getMeteoApiData(lon: widget.city.lon, lat: widget.city.lat);
 
   }
 

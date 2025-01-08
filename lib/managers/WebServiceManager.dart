@@ -2,11 +2,13 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:Meteo/models/WSResponse.dart';
+import 'package:Meteo/models/WeatherInfo.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart';
 
 import 'package:Meteo/utils/ConnectivityUtils.dart';
 
+import '../env/env.dart';
 import '../models/City.dart';
 import '../resources/Constants.dart';
 
@@ -38,7 +40,7 @@ class WebServiceManager {
       params.addEntries({
         MapEntry('q', searchString),
         MapEntry('limit', '3'),
-        MapEntry('appid', '1aabeddc4b91103f061c00e6b5ad4ad3'),
+        MapEntry('appid', Env.apiKey),
       });
       // url de la requête
       var url =  Uri.https(
@@ -56,7 +58,6 @@ class WebServiceManager {
       // succès
         case 200:
 
-          print(json.decode(response.body) as List);
           List<City> cities = (json.decode(response.body) as List).map((item) =>
               City.fromJson(item)).toList();
 
@@ -77,7 +78,7 @@ class WebServiceManager {
   }
 
 
-  Future<WSResult> getMeteoApiData() async {
+  Future<WSResult> getMeteoApiData({required double lon, required double lat}) async {
     // on vérifie qu'on a bien internet
     if (!(await ConnectivityUtils().isNetworkAvailable())) {
       return WSResult.NO_NETWORK;
@@ -86,9 +87,11 @@ class WebServiceManager {
     try {
       var params = <String, String>{};
       params.addEntries({
-        MapEntry('lat', '44.34'),
-        MapEntry('lon', '10.99'),
-        MapEntry('appid', '1aabeddc4b91103f061c00e6b5ad4ad3'),
+        MapEntry('lat', "$lat"),
+        MapEntry('lon', "$lon"),
+        MapEntry('units', "metric"),
+        MapEntry('lang', "fr_fr"),
+        MapEntry('appid', Env.apiKey),
       });
       var url =  Uri.https(
         Constants.API_DOMAIN,
@@ -102,6 +105,11 @@ class WebServiceManager {
       switch (response.statusCode) {
       // succès
         case 200:
+          print("success");
+          print(json.decode(response.body));
+          WeatherInfo weatherInfo = WeatherInfo.fromJson(json.decode(response.body)) ;
+          print("success weatherInfo : $weatherInfo");
+
           return WSResult.SUCCESS;
 
       // réponse erreur standard
