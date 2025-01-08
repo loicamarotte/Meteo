@@ -1,7 +1,9 @@
 
 import 'dart:async';
 
+import 'package:Meteo/screens/controllers/WeatherController.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 import '../../managers/WebServiceManager.dart';
 import '../../models/City.dart';
@@ -72,7 +74,7 @@ class HomeController extends State<HomeViewController> {
   }
 
   didTapOnSearchedCity(City city) {
-    print(city.frenchName);
+    _goToWeather(city: city) ;
   }
   //endregion
 
@@ -94,6 +96,12 @@ class HomeController extends State<HomeViewController> {
       case WSResult.NO_NETWORK:
         break;
     }
+  }
+  //endregion
+
+  //region Navigation
+  _goToWeather({required City city}) {
+    Navigator.push(context, MaterialPageRoute(builder: (context) => WeatherViewController(city: city)));
   }
   //endregion
 }

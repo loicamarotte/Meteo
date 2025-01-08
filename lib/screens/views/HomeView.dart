@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../../models/City.dart';
-import '../../theme/CustomColors.dart';
 import '../../theme/CustomDimens.dart';
 import '../../utils/WidgetView.dart';
 import '../controllers/HomeController.dart';
@@ -17,7 +16,6 @@ class HomeView extends WidgetView<HomeViewController, HomeController> {
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle.dark.copyWith(statusBarColor: Colors.white),
       child: Scaffold(
-       // backgroundColor: CustomColors.BACKGROUND_COLOR,
         resizeToAvoidBottomInset: false,
         body: SafeArea(
           child: Center(
