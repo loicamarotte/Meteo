@@ -4,6 +4,7 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 
 import '../../managers/WebServiceManager.dart';
+import '../../models/City.dart';
 import '../views/HomeView.dart';
 
 class HomeViewController extends StatefulWidget {
@@ -19,6 +20,8 @@ class HomeViewController extends StatefulWidget {
 class HomeController extends State<HomeViewController> {
   ValueNotifier<bool> isLoading = ValueNotifier(false);
   ValueNotifier<bool> displaySearchResults = ValueNotifier(false);
+
+  ValueNotifier<List<City>> searchResults = ValueNotifier([]);
 
   TextEditingController searchBarController = TextEditingController();
 
@@ -44,12 +47,13 @@ class HomeController extends State<HomeViewController> {
   _loadData() async {
   }
 
+  //region User action
   didSearchText(String searchText) {
 
     // si moins de 3 char, on cherche pas
     if(searchText.length < 3) {
       isLoading.value = true ;
-      //resultTitles.value = [] ;
+      searchResults.value = [] ;
       isLoading.value = false ;
       displaySearchResults.value = false ;
       return ;
@@ -67,8 +71,29 @@ class HomeController extends State<HomeViewController> {
     });
   }
 
+  didTapOnSearchedCity(City city) {
+    print(city.frenchName);
+  }
+  //endregion
+
+  //region Get Data
   _getSearchResults() async {
     var searchString = searchBarController.text ;
     var resp = await WebServiceManager().getGeoCodingApiData(searchString: searchString) ;
+    print("resp : $resp");
+    print(resp.result);
+
+    switch(resp.result) {
+      case WSResult.SUCCESS:
+        print("success");
+        print(resp.value) ;
+        searchResults.value = resp.value as List<City>;
+        break;
+      case WSResult.ERROR:
+        break;
+      case WSResult.NO_NETWORK:
+        break;
+    }
   }
+  //endregion
 }
