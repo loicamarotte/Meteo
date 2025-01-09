@@ -78,10 +78,10 @@ class WebServiceManager {
   }
 
 
-  Future<WSResult> getMeteoApiData({required double lon, required double lat}) async {
+  Future<WSResponse> getMeteoApiData({required double lon, required double lat}) async {
     // on vérifie qu'on a bien internet
     if (!(await ConnectivityUtils().isNetworkAvailable())) {
-      return WSResult.NO_NETWORK;
+      return WSResponse(result: WSResult.NO_NETWORK);
     }
 
     try {
@@ -90,7 +90,7 @@ class WebServiceManager {
         MapEntry('lat', "$lat"),
         MapEntry('lon', "$lon"),
         MapEntry('units', "metric"),
-        MapEntry('lang', "fr_fr"),
+        MapEntry('lang', "fr"), // TODO: implémenter int si besoin
         MapEntry('appid', Env.apiKey),
       });
       var url =  Uri.https(
@@ -105,19 +105,17 @@ class WebServiceManager {
       switch (response.statusCode) {
       // succès
         case 200:
-          print("success");
-          print(json.decode(response.body));
           WeatherInfo weatherInfo = WeatherInfo.fromJson(json.decode(response.body)) ;
           print("success weatherInfo : $weatherInfo");
 
-          return WSResult.SUCCESS;
+          return WSResponse(result: WSResult.SUCCESS, value: weatherInfo);
 
       // réponse erreur standard
         default:
-          return WSResult.ERROR;
+          return WSResponse(result: WSResult.ERROR);
       }
     } catch (exception) {
-      return WSResult.ERROR;
+      return WSResponse(result: WSResult.ERROR);
     }
   }
 

@@ -10,12 +10,15 @@ class AppTheme {
       primary: CustomColors.DARK_BLUE,
       secondary: CustomColors.PINK,
       onPrimary: CustomColors.BLACK,
-      primaryContainer: CustomColors.LIGHT_BLUE,
-      onPrimaryContainer: CustomColors.BLACK,
       onSecondary: CustomColors.BLACK,
+      primaryContainer: CustomColors.MEDIUM_BLUE,
+      secondaryContainer: CustomColors.DARK_BLUE,
+      onPrimaryContainer: Colors.white,
+      onSecondaryContainer: Colors.white,
       surface: CustomColors.BEIGE,
       onSurface: CustomColors.BLACK,
       onSurfaceVariant: CustomColors.NAVY_BLUE,
+      surfaceBright: CustomColors.DARK_BLUE
     ),
   );
 

@@ -10,6 +10,7 @@ WeatherType _$WeatherTypeFromJson(Map<String, dynamic> json) => WeatherType(
       id: (json['id'] as num).toInt(),
       main: json['main'] as String,
       description: json['description'] as String,
+      icon: json['icon'] as String,
     );
 
 Map<String, dynamic> _$WeatherTypeToJson(WeatherType instance) =>
@@ -17,4 +18,5 @@ Map<String, dynamic> _$WeatherTypeToJson(WeatherType instance) =>
       'id': instance.id,
       'main': instance.main,
       'description': instance.description,
+      'icon': instance.icon,
     };

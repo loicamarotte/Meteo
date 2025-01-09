@@ -92,8 +92,10 @@ class HomeController extends State<HomeViewController> {
         searchResults.value = resp.value as List<City>;
         break;
       case WSResult.ERROR:
+        // TODO: gérer erreur
         break;
       case WSResult.NO_NETWORK:
+        // TODO: gérer pas internet
         break;
     }
   }

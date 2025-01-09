@@ -12,6 +12,10 @@ WeatherInfo _$WeatherInfoFromJson(Map<String, dynamic> json) => WeatherInfo(
           .toList(),
       mainInfo: WeatherMain.fromJson(json['main'] as Map<String, dynamic>),
       wind: Wind.fromJson(json['wind'] as Map<String, dynamic>),
+      rain: json['rain'] == null
+          ? null
+          : Rain.fromJson(json['rain'] as Map<String, dynamic>),
+      cloud: Cloud.fromJson(json['clouds'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$WeatherInfoToJson(WeatherInfo instance) =>
@@ -19,4 +23,6 @@ Map<String, dynamic> _$WeatherInfoToJson(WeatherInfo instance) =>
       'weather': instance.weather,
       'main': instance.mainInfo,
       'wind': instance.wind,
+      'rain': instance.rain,
+      'clouds': instance.cloud,
     };

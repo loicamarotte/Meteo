@@ -67,7 +67,6 @@ class HomeView extends WidgetView<HomeViewController, HomeController> {
         valueListenable: state.isLoading,
         builder: (context, bool isLoading, child) {
 
-          print("isloading");
         return _searchCityList();
       }
     );

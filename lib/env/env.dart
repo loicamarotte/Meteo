@@ -5,5 +5,5 @@ part 'env.g.dart';
 @Envied(path: '.env')
 final class Env {
   @EnviedField(varName: 'APIKEY', obfuscate: true)
-  static const String apiKey = _Env.apiKey;
+  static String apiKey = _Env.apiKey;
 }
