@@ -1,16 +1,33 @@
-# meteo
+# Météo
 
-A new Meteo project.
+Projet/démo d'application mobile de météo
 
-## Getting Started
+## Features
+- Rechercher une ville
+- Visualiser la météo actuelle dans cette ville
+- Ajouter une ville à ma liste
+- Consulter mes villes enregistrées
+- Consulter la météo actuelle d'une de mes villes enregistrées
 
-This project is a starting point for a Flutter application.
+## Pistes d'amélioration
+- Persister les données dans une base de données SQLite
+- Afficher la météo à la semaine
+- Afficher plus d'information de météo
+- Afficher la météo actuelle dans les cards de la liste de "mes villes"
+- Améliorer l'UI globale
+- Gérer correctement les erreurs/l'app offline
+- Ajouter un trackeur de bug
+- Mettre en place la traduction
+- Autoriser et pouvoir paramétrer les différentes unités
+- Pouvoir se géolocaliser
+- Améliorer le schéma de données
 
-A few resources to get you started if this is your first Flutter project:
+### Remarques
+Cette application a été testée uniquement sur simulateur iOS/Android
+Elle utilise les API suivantes :
+http://api.openweathermap.org/geo/1.0/direct
+Pour le géocoding : trouver une ville par son nom et récupérer les coord GPS
+https://api.openweathermap.org/data/2.5/weather
+Pour récupérer les infos météo de coordonnées GPS données
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+dernière maj : 09/01/25
