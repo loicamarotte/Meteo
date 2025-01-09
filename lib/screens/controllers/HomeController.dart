@@ -2,7 +2,6 @@
 import 'dart:async';
 
 import 'package:Meteo/screens/controllers/WeatherController.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../managers/WebServiceManager.dart';
@@ -26,19 +25,30 @@ class HomeController extends State<HomeViewController> {
   ValueNotifier<List<City>> searchResults = ValueNotifier([]);
 
   TextEditingController searchBarController = TextEditingController();
+  FocusNode searchBarFocusNode = FocusNode() ;
 
   Timer? _timerSearch;
 
   @override
   void dispose() {
     super.dispose();
+    searchBarFocusNode.removeListener(_focusNodeListener);
+
   }
 
   @override
   void initState() {
     super.initState();
+    searchBarFocusNode.addListener(_focusNodeListener);
+  }
 
-    _loadData();
+  _focusNodeListener() {
+    if(searchBarFocusNode.hasFocus && searchBarController.text.isNotEmpty) {
+      displaySearchResults.value = true ;
+    }
+    else {
+      displaySearchResults.value = false ;
+    }
   }
 
   @override
@@ -46,7 +56,10 @@ class HomeController extends State<HomeViewController> {
     return HomeView(this);
   }
 
-  _loadData() async {
+  _clearSearch() {
+    searchBarController.clear();
+    searchBarFocusNode.unfocus();
+    searchResults.value.clear();
   }
 
   //region User action
@@ -73,7 +86,16 @@ class HomeController extends State<HomeViewController> {
     });
   }
 
+  didTapOnClearSearchBar() {
+    _clearSearch();
+  }
+
   didTapOnSearchedCity(City city) {
+    _clearSearch();
+    _goToWeather(city: city) ;
+  }
+
+  didTapOnCity(City city) {
     _goToWeather(city: city) ;
   }
   //endregion
@@ -82,13 +104,9 @@ class HomeController extends State<HomeViewController> {
   _getSearchResults() async {
     var searchString = searchBarController.text ;
     var resp = await WebServiceManager().getGeoCodingApiData(searchString: searchString) ;
-    print("resp : $resp");
-    print(resp.result);
 
     switch(resp.result) {
       case WSResult.SUCCESS:
-        print("success");
-        print(resp.value) ;
         searchResults.value = resp.value as List<City>;
         break;
       case WSResult.ERROR:

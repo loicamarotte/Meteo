@@ -1,9 +1,7 @@
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:Meteo/models/WSResponse.dart';
 import 'package:Meteo/models/WeatherInfo.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart';
 
 import 'package:Meteo/utils/ConnectivityUtils.dart';
@@ -48,20 +46,17 @@ class WebServiceManager {
         Constants.API_GEOCODING_WS,
         params,
       );
-      print("envoi requête pour $searchString");
       // envoi de la requête
       final response = await get(url).timeout(const Duration(seconds: time_out_seconds_duration));
-
-      print("réponse !");
 
       switch (response.statusCode) {
       // succès
         case 200:
 
+          // converti le json en objet
           List<City> cities = (json.decode(response.body) as List).map((item) =>
-              City.fromJson(item)).toList();
+              City.fromJson(item)).toSet().toList();
 
-          print("cities : $cities");
           return WSResponse(result: WSResult.SUCCESS, value: cities);
 
       // réponse erreur standard
@@ -106,8 +101,6 @@ class WebServiceManager {
       // succès
         case 200:
           WeatherInfo weatherInfo = WeatherInfo.fromJson(json.decode(response.body)) ;
-          print("success weatherInfo : $weatherInfo");
-
           return WSResponse(result: WSResult.SUCCESS, value: weatherInfo);
 
       // réponse erreur standard

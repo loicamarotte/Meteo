@@ -10,7 +10,6 @@ import '../../models/Rain.dart';
 import '../../models/WeatherInfo.dart';
 import '../../models/WeatherType.dart';
 import '../../models/Wind.dart';
-import '../../theme/CustomColors.dart';
 import '../../utils/WidgetView.dart';
 import '../controllers/WeatherController.dart';
 
@@ -37,11 +36,38 @@ class WeatherView extends WidgetView<WeatherViewController, WeatherController> {
                     mainAxisSize: MainAxisSize.max,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      _addButton(context),
                       _cityTitle(context),
                       _weatherInfo(context),
                     ],
                   );
                 }
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _addButton(BuildContext context) {
+    if(!state.displayAddCityButton) {
+      return Container();
+    }
+    return Align(
+      alignment: Alignment.centerRight,
+      child: InkWell(
+        borderRadius: BorderRadius.circular(CustomDimens.container_border_radius),
+        onTap: state.didTapOnAddButton,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+              horizontal: CustomDimens.small_spacing,
+            vertical: CustomDimens.x_small_spacing,
+          ),
+          child: Text(
+              "Ajouter",
+            textAlign: TextAlign.end,
+            style: TextStyle(
+              color: Theme.of(context).colorScheme.onPrimaryContainer,
             ),
           ),
         ),

@@ -1,5 +1,4 @@
 
-import 'package:Meteo/managers/WebServiceManager.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -38,10 +37,9 @@ class SplashController extends State<SplashViewController> {
   }
 
   _loadData() async {
-    //await WebServiceManager().getMeteoApiData();
-
     // simule loading
-    await Future.delayed(Duration(seconds: 2));
+    // TODO: charger les villes une fois persistées dans l'app
+    await Future.delayed(Duration(seconds: 1));
 
     _goToHome();
   }

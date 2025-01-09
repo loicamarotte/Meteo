@@ -1,9 +1,9 @@
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
-import '../../theme/CustomColors.dart';
+import '../../theme/CustomDimens.dart';
 import '../../utils/WidgetView.dart';
 import '../controllers/SplashController.dart';
 
@@ -20,9 +20,25 @@ class SplashView extends WidgetView<SplashViewController, SplashController> {
           child: Center(
             child: Column(
               mainAxisSize: MainAxisSize.max,
-              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text("Météo")
+                Text(
+                    "Météo",
+                    style: TextStyle(
+                        color: Theme.of(context).colorScheme.onSurfaceVariant,
+                        fontSize: 44,
+                        fontWeight: FontWeight.bold
+                    )
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: CustomDimens.large_spacing),
+                  child: LoadingAnimationWidget.twistingDots(
+                    leftDotColor: Theme.of(context).colorScheme.onSurfaceVariant,
+                    rightDotColor: Theme.of(context).colorScheme.onSurfaceVariant,
+                    size: 30,
+                  ),
+                )
               ],
             ),
           ),

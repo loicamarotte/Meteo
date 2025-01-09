@@ -23,5 +23,24 @@ class City {
 
     return City(name: name, frenchName: frenchName, lat: lat, lon: lon, country: country, state: state);
   }
+
+  @override
+  bool operator==(other) {
+    if(other is! City) {
+      return false;
+    }
+    return (name == (other).name) && (country == (other).country) && (state == (other).state) ;
+  }
+
+  @override
+  int get hashCode => (name + country + (state ?? "")).hashCode;
+
+  String getDisplayedName() {
+    return frenchName ?? name ;
+  }
+
+  String getCountryAndState() {
+    return state != null ? "$state, $country" : country ;
+  }
 }
 

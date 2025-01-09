@@ -1,5 +1,5 @@
 
-import 'package:flutter/cupertino.dart';
+import 'package:Meteo/managers/UserCityManager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -56,30 +56,46 @@ class HomeView extends WidgetView<HomeViewController, HomeController> {
       controller: state.searchBarController,
       hintText: "Rechercher un ville",
       leading: Icon(Icons.search),
+      trailing: [_clearButton()],
       onChanged: (searchText) {
         state.didSearchText(searchText);
-      }
+      },
+      focusNode: state.searchBarFocusNode,
     );
   }
 
-  Widget _mainContent(BuildContext) {
+  Widget _clearButton() {
+    return InkWell(
+      onTap: state.didTapOnClearSearchBar,
+      child: Icon(Icons.clear)
+    ) ;
+  }
+
+  Widget _mainContent() {
     return ValueListenableBuilder(
         valueListenable: state.isLoading,
         builder: (context, bool isLoading, child) {
 
-        return _searchCityList();
+          return ValueListenableBuilder(
+              valueListenable: state.displaySearchResults,
+              builder: (context, bool displaySearchResults, child) {
+                if(displaySearchResults) {
+                  return _searchCityList();
+                }
+                return _userCityList();
+              });
       }
     );
   }
 
-  ValueListenableBuilder<List<City>> _searchCityList() {
+  Widget _searchCityList() {
     return ValueListenableBuilder(
           valueListenable: state.searchResults,
           builder: (context, List<City> searchResults, child) {
-            print("searchresults : ${searchResults.length}");
 
             return Expanded(
               child: ListView.builder(
+                padding: EdgeInsets.only(top: CustomDimens.medium_spacing),
                 itemBuilder: (context, int index) {
                   var item = searchResults[index] ;
                   var text = "${item.frenchName ?? item.name}, ${item.country}" ;
@@ -89,7 +105,12 @@ class HomeView extends WidgetView<HomeViewController, HomeController> {
                   return GestureDetector(
                     child: Padding(
                       padding: const EdgeInsets.only(left:CustomDimens.medium_spacing, top: CustomDimens.small_spacing, right: CustomDimens.medium_spacing),
-                      child: Text(text),
+                      child: Text(
+                          text,
+                          style: TextStyle(
+                              fontSize: 16
+                          )
+                      ),
                     ),
                     onTap: () { state.didTapOnSearchedCity(item) ;},
                   );
@@ -98,5 +119,64 @@ class HomeView extends WidgetView<HomeViewController, HomeController> {
                 ),
             );
           });
+  }
+
+  Widget _userCityList() {
+    return ValueListenableBuilder(
+      valueListenable: UserCityManager().getCities(),
+      builder: (context, List<City> cities, child) {
+        return Expanded(
+          child: ListView.builder(
+            padding: EdgeInsets.symmetric(vertical: CustomDimens.large_spacing),
+            itemCount: cities.length,
+            itemBuilder: (context, int index) {
+            var city = cities[index];
+            print(city);
+            return Padding(
+              padding: const EdgeInsets.only(bottom: CustomDimens.small_spacing),
+              child: InkWell(
+                onTap: () { state.didTapOnCity(city); },
+                  child: _cityCard(context, city)
+              ),
+            );
+          }),
+        );
+      },
+    );
+  }
+
+  Container _cityCard(BuildContext context, City city) {
+    return Container(
+      decoration: BoxDecoration(
+        color: Theme.of(context).colorScheme.primaryContainer,
+        borderRadius: BorderRadius.circular(CustomDimens.container_border_radius)
+      ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(
+            vertical: CustomDimens.small_spacing,
+          horizontal: CustomDimens.medium_spacing
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+                city.getDisplayedName(),
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.onPrimaryContainer,
+                fontWeight: FontWeight.bold,
+                fontSize: 18
+              ),
+            ),
+            Text(
+                city.getCountryAndState(),
+                style: TextStyle(
+                    color: Theme.of(context).colorScheme.onPrimaryContainer,
+                    fontSize: 16
+                )
+            )
+          ],
+        ),
+      ),
+    );
   }
 }

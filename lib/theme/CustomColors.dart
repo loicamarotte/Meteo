@@ -7,6 +7,6 @@ class CustomColors {
   static const MEDIUM_BLUE = Color(0xff67a2cb);
   static const LIGHT_BLUE = Color(0xffa6d4f2);
   static const BEIGE = Color(0xfff5e3d3);
-  static const PINK = Color(0xfff5e3d3);
+  static const PINK = Color(0xffeccabe);
   static const BLACK = Colors.black ;
 }
